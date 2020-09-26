@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="stock.info.stock.mappper.SingleStockRealTimeInfoMapper">
+    <select id="getSingleStockRealTimeInfoList" resultType="stock.info.stock.model.SingleStockCfg">
+        select * from single_stock_cfg
+        <where>
+            <if test="stockNo != null and stockNo != ''">
+                and stock_no = #{stockNo}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertSingleStockRealTimeInfo">
+        insert into
+        single_stock_realtime_info(stock_no,stock_name,real_time,real_time_str,`date`,
+          yesterday_closing_price,closing_price,opening_price,real_time_price,real_max_price,real_min_price,
+          limit_max_price,limit_min_price,avg_price,amount_of_increase,change_price,turn_over_rate,
+          quantity_relative_ratio,order_ratio,order_diff,volume,volume_of_transaction,
+          inside_dish,out_side_dish,avg_60_price,avg_30_price,avg_10_price,avg_5_price)
+        values
+        <foreach collection="list" item="info" separator=",">
+            (#{info.stockNo},#{info.stockName},#{info.realTime},#{info.realTimeStr},#{info.date},
+            #{info.yesterdayClosingPrice},#{info.closingPrice},#{info.openingPrice},#{info.realTimePrice},#{info.realMaxPrice},#{info.realMinPrice},
+            #{info.limitMaxPrice},#{info.limitMinPrice},#{info.avgPrice},#{info.amountOfIncrease},#{info.changePrice},#{info.turnOverRate},
+            #{info.quantityRelativeRatio},#{info.orderRatio},#{info.orderDiff},#{info.volume},#{info.volumeOfTransaction},
+            #{info.insideDish},#{info.outSideDish},#{info.avg60Price},#{info.avg30Price},#{info.avg10Price},#{info.avg5Price})
+        </foreach>
+    </insert>
+
+</mapper>
